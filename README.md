@@ -5,7 +5,8 @@ kubectl apply -f file.yml
 kubectl get ns
 kubectl get po
 kubectl get po pod_name
-kubectl get po -n namespace_name -o wide # with wide you can see more details like which node the pod is running
+# with wide you can see more details like which node the pod is running
+kubectl get po -n namespace_name -o wide
 kubectl get all
 kubectl get po,svc,deploy,rs
 
