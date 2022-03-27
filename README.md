@@ -11,9 +11,10 @@ kubectl get po pod_name
 kubectl get po -n namespace_name -o wide
 kubectl get all
 kubectl get po -o yaml > pod.yaml
-kubectl get po,svc,deploy,rs,cm,ns,secret,node
+kubectl get po,svc,deploy,rs,cm,ns,secret,node,job,cj
 kubectl get po --show-labels
 kubectl get po -l label_name=value,label_name2=value2
+kubectl get po --selector env=dev,bu=finance
 
 kubectl delete po pod_name
 
@@ -42,6 +43,16 @@ kubectl taint nodes controlplane node-role.kubernetes.io/master:NoSchedule- # un
 kubectl label node node_name name_label=value
 
 kubectl exec -it app -- cat /log/app.log -n elastic-stack
+
+kubectl logs pod_name
+kubectl logs pod_name -c container_name # used when a pod has more than one container.
+
+kubectl top node #show k8s metrics after metrics-server installation
+kubectl top po
+
+kubectl rollout status deploy nginx
+kubectl rollout history deploy nginx
+kubectl rollout undo deploy nginx
 ```
 
 To access a service from another namespace use ***service_name.namespace_name.svc.cluster.local***
@@ -210,4 +221,44 @@ spec:
 
   - name: gold
     image: redis
+```
+
+## Job/CronJob
+
+```yml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4
+```
+
+```yml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
 ```
