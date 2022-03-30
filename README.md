@@ -11,7 +11,7 @@ kubectl get po pod_name
 kubectl get po -n namespace_name -o wide
 kubectl get all
 kubectl get po -o yaml > pod.yaml
-kubectl get po,svc,deploy,rs,cm,ns,secret,node,job,cj
+kubectl get po,svc,deploy,rs,cm,ns,secret,node,job,cj,netpol,pv,pvc
 kubectl get po --show-labels
 kubectl get po -l label_name=value,label_name2=value2
 kubectl get po --selector env=dev,bu=finance
@@ -37,12 +37,13 @@ kubectl create ns namespace_name
 kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue
 kubectl create secret generic db-secret --from-literal=DB_Host=sql01 --from-literal=DB_User=root
 
-kubectl taint nodes node_name spray=label_name:NoSchedule
+kubectl taint nodes node_name lavel=label_value:NoSchedule
 kubectl taint nodes controlplane node-role.kubernetes.io/master:NoSchedule- # untaint the taint
 
 kubectl label node node_name name_label=value
 
 kubectl exec -it app -- cat /log/app.log -n elastic-stack
+kubectl exec -it pod_name -- sh
 
 kubectl logs pod_name
 kubectl logs pod_name -c container_name # used when a pod has more than one container.
@@ -53,6 +54,13 @@ kubectl top po
 kubectl rollout status deploy nginx
 kubectl rollout history deploy nginx
 kubectl rollout undo deploy nginx
+
+kubectl describe ingress -n name_namespace #to check default endpoint
+
+kubectl config view
+kubectl config use-config user@context
+
+kubectl auth can-i create deploy --as dev -n namespace_name 
 ```
 
 To access a service from another namespace use ***service_name.namespace_name.svc.cluster.local***
@@ -261,4 +269,137 @@ spec:
             - -c
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
+```
+
+## Service
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  type: NodePort # or ClusterIP
+  ports:
+    - targetPort: 8080
+      port: 8080
+      nodePort: 30080 #not necessary in ClusterIP
+  selector:
+    name: simple-webapp
+```
+
+## Ingress
+
+```yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: critical-space
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /pay
+        pathType: Prefix
+        backend:
+          service:
+           name: pay-service
+           port:
+            number: 8282
+```
+
+## NetworkPolicy
+
+```yml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: internal-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      name: internal
+  policyTypes:
+  - Egress
+  - Ingress
+  ingress:
+    - {}
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: mysql
+    ports:
+    - protocol: TCP
+      port: 3306
+
+  - to:
+    - podSelector:
+        matchLabels:
+          name: payroll
+    ports:
+    - protocol: TCP
+      port: 8080
+
+  - ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+```
+
+## Volumes
+
+```yml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log
+spec:
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 100Mi
+  hostPath:
+    path: /pv/log
+```
+
+```yml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: claim-log-1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+```
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+spec:
+  containers:
+  - name: event-simulator
+    image: kodekloud/event-simulator
+    env:
+    - name: LOG_HANDLERS
+      value: file
+    volumeMounts:
+    - mountPath: /log
+      name: log-volume
+
+   volumes:
+  - name: log-volume
+    persistentVolumeClaim:
+      claimName: claim-log-1
 ```
