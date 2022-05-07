@@ -3,6 +3,7 @@
 ## Useful commands
 
 ```
+kubectl config set-context --current --namespace=<insert-namespace-name-here>
 kubectl apply -f file.yml
 
 kubectl get po -A #get all the pods in all namespaces
