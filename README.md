@@ -372,6 +372,7 @@ spec:
 ```
 
 ```yml
+apiVersion: v1
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
