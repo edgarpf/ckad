@@ -248,16 +248,21 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pi
+  name: neb-new-job
+  namespace: neptune
 spec:
+  parallelism: 2
+  completions: 3
   template:
+    metadata:
+      labels:
+        id: awesome-job
     spec:
-      containers:
-      - name: pi
-        image: perl
-        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
-      restartPolicy: Never
-  backoffLimit: 4
+     containers:
+     - name: neb-new-job-container
+       image: busybox:1.31.0
+       command: ["sleep",  "2", "&&", "echo", "done"]
+     restartPolicy: Never
 ```
 
 ```yml
