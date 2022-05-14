@@ -71,7 +71,9 @@ helm search repo chart_name --versions
 helm upgrade name_release name_chart -n name_namespace
 helm install name_release chart_name --set key=value --set key2=value2 -n name_namespace
 
-
+#decode or encode a base64 text inside a file
+base64 file_name -d > path/file
+base64 file_name -e > path/file
 ```
 
 To access a service from another namespace use ***service_name.namespace_name.svc.cluster.local***
