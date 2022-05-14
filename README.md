@@ -8,6 +8,7 @@ kubectl apply -f file.yml
 
 kubectl get po -A #get all the pods in all namespaces
 kubectl get po pod_name
+kubectl get po  --no-headers -o custom-columns=":status.phase" # mostrar a penas o valor da coluna status
 # with wide you can see more details like which node the pod is running
 kubectl get po -n namespace_name -o wide
 kubectl get all
