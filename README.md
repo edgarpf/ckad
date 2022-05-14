@@ -27,6 +27,9 @@ kubectl describe po pod_name
 kubectl describe cm # it will show all the cm of a namespace with their values
 kubectl describe node node01 | grep -i taints # check if there is a taint in a node
 
+#describe a secret shows the secrets base64 DECODED.
+kubectl describe secret secret_name
+
 kubectl run nginx --image=nginx -l=tier=db --port 7000 --expose
 kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yml
 
