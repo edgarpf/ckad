@@ -63,6 +63,13 @@ kubectl config view
 kubectl config use-config user@context
 
 kubectl auth can-i create deploy --as dev -n namespace_name 
+
+helm list --namespace nome_namespace
+helm delete name_release --namespace name_namespace
+helm repo list
+helm search repo chart_name --versions
+helm upgrade name_release name_chart --namespace name_namespace
+helm install name_release chart_name --set key=value --set key2=value2 --namespace name_namespace
 ```
 
 To access a service from another namespace use ***service_name.namespace_name.svc.cluster.local***
