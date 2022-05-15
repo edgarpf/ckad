@@ -73,6 +73,8 @@ helm repo list
 helm search repo chart_name --versions
 helm upgrade name_release name_chart -n name_namespace
 helm install name_release chart_name --set key=value --set key2=value2 -n name_namespace
+#show value than you can use in --set
+helm show values bitnami/apache | yq e
 
 #decode or encode a base64 text inside a file
 base64 file_name -d > path/file
