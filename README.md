@@ -62,6 +62,9 @@ kubectl rollout history deploy nginx
 #deploy the previous version
 kubectl rollout undo deploy nginx
 
+#make a temporary pod only to check a url
+kubectl run tmp --restart=Never --rm --image=nginx:alpine -i -- curl http://project-plt-6cc-svc.pluto:3333
+
 kubectl describe ingress -n name_namespace #to check default endpoint
 
 kubectl config view
