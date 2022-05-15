@@ -68,7 +68,7 @@ kubectl config use-config user@context
 kubectl auth can-i create deploy --as dev -n namespace_name 
 
 helm ls -n nome_namespace -a
-helm delete name_release -n name_namespace
+helm uninstall name_release -n name_namespace
 helm repo list
 helm search repo chart_name --versions
 helm upgrade name_release name_chart -n name_namespace
