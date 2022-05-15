@@ -73,6 +73,9 @@ kubectl config use-config user@context
 
 kubectl auth can-i create deploy --as dev -n namespace_name 
 
+#set label protected=true on pods with label "type" equal worker or runner
+kubectl -n sun label pod -l "type in (worker,runner)" protected=true
+
 helm ls -n nome_namespace -a
 helm uninstall name_release -n name_namespace
 helm repo list
