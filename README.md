@@ -88,6 +88,9 @@ helm show values bitnami/apache | yq e
 #decode or encode a base64 text inside a file
 base64 file_name -d > path/file
 base64 file_name -e > path/file
+
+docker build Dockerfile -t name_image
+docker image ls
 ```
 
 To access a service from another namespace use ***service_name.namespace_name.svc.cluster.local***
