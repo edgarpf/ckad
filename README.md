@@ -41,6 +41,7 @@ kubectl create deploy deploy_name --image=image_name --replicas=3
 kubectl create ns namespace_name
 kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue
 kubectl create secret generic db-secret --from-literal=DB_Host=sql01 --from-literal=DB_User=root
+kubectl create configmap webapp-config-map  --from-file=index.html=/opt/course/15/web-moon.htm
 
 kubectl taint nodes node_name lavel=label_value:NoSchedule
 kubectl taint nodes controlplane node-role.kubernetes.io/master:NoSchedule- # untaint the taint
