@@ -57,7 +57,9 @@ kubectl top node #show k8s metrics after metrics-server installation
 kubectl top po
 
 kubectl rollout status deploy nginx
+kubectl rollout history -h
 kubectl rollout history deploy nginx
+#deploy the previous version
 kubectl rollout undo deploy nginx
 
 kubectl describe ingress -n name_namespace #to check default endpoint
