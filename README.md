@@ -12,7 +12,7 @@ kubectl get po  --no-headers -o custom-columns=":status.phase" # mostrar a penas
 # with wide you can see more details like which node the pod is running
 kubectl get po -n namespace_name -o wide
 kubectl get all
-kubectl get po -o yaml > pod.yaml
+kubectl get po pod_name -o yaml > pod.yaml
 kubectl get po,svc,deploy,rs,cm,ns,secret,node,job,cj,netpol,pv,pvc
 kubectl get po --show-labels
 kubectl get po -l label_name=value,label_name2=value2
