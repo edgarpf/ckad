@@ -467,7 +467,7 @@ spec:
       periodSeconds: 3
 ```
 
-#Extras
+## Extras
 
  - [Canary deployments](https://phoenixnap.com/kb/kubernetes-canary-deployments) using a service.
  - [How to use export in docker] (https://www.techrepublic.com/article/how-to-exportimport-containers-with-docker/). Remember that you can export in ***.tar*** format. 
