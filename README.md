@@ -469,7 +469,8 @@ spec:
 
 ## Extras
 
- - Do not stuck in one question. Use the flag option. You can come back later.  
+ - Begin your exam trying to answer the easiest questions. Flag the others (the ones above 5%) to answer them later.  
+ - Do not get stuck in one question. Use the flag option. You can come back later.  
  - If you do not know the answer completely for a question remember that you can make only a part of it and get some points. Try not to let any question in blank.
  - [Canary deployments](https://phoenixnap.com/kb/kubernetes-canary-deployments) using a service.
  - [How to use export in docker](https://www.techrepublic.com/article/how-to-exportimport-containers-with-docker/). Remember that you can export in ***.tar*** format. 
