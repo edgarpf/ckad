@@ -14,6 +14,8 @@ Tips for ***CERTIFIED KUBERNETES APPLICATION DEVELOPER***
 
 ## Useful commands
 
+***hint***: Remember that you can use 'k' instead of 'kubectl' in your exam.   
+
 ```
 kubectl config set-context --current --namespace=<insert-namespace-name-here>
 kubectl apply -f file.yml
