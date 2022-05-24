@@ -7,6 +7,8 @@ Tips for ***CERTIFIED KUBERNETES APPLICATION DEVELOPER***
  - Begin your exam trying to answer the easiest questions. Flag the others (the ones above 5%) to answer them later.  
  - Do not get stuck in one question. Use the flag option. You can come back later.  
  - If you do not know the answer completely for a question remember that you can make only a part of it and get some points. Try not to let any question in blank.
+ - If you fail in your first try you can take a retake for free. Some of the questions might be the same of your first try. So, get the answers of the ones you did not solved.  
+ - You can use a simulator before the real exam. Use it! You can save the answers to study offline by saving html page using your web broswer.
  - [Canary deployments](https://phoenixnap.com/kb/kubernetes-canary-deployments) using a service.
  - [How to use export in docker](https://www.techrepublic.com/article/how-to-exportimport-containers-with-docker/). Remember that you can export in ***.tar*** format. 
 
